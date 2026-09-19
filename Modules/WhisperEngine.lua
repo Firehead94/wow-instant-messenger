@@ -30,6 +30,7 @@ local playerRealm = GetRealmName();
 local GetPlayerInfoByGUID = GetPlayerInfoByGUID;
 local FlashClientIcon = FlashClientIcon;
 local ChatFrameUtil = ChatFrameUtil;
+local _, _, _, interfaceVersion = GetBuildInfo()
 
 -- set name space
 setfenv(1, WIM);
@@ -254,7 +255,9 @@ local function getWhisperWindowByUser(user, isBN, bnID, fromEvent)
 			return bnWin;
 		end
 	else
-		user = string.gsub(user," ","") -- Drii: WoW build15050 whisper bug for x-realm server with space
+		if interfaceVersion ~= 16001 then
+			user = string.gsub(user," ","") -- Drii: WoW build15050 whisper bug for x-realm server with space
+		end
 	    user = fromEvent and user or FormatUserName(user);
 	end
 
